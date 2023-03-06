@@ -17,12 +17,16 @@ using Test
     end
 
     d2 = Dict{Char,Int}()
-    t2 = @elapsed # ...
+    t2 = @elapsed for c in ['a':'z'; 'A':'Z'; '0':'9']
+        d[c] = count(c, str)
+    end
     @test t2 < t
 
     # Since it's a discrete list of values, can you do even better with an array?
     # Hint: try `Int('z')` for ideas.
     counter = zeros(Int, 26*2+10)
-    t3 = @elapsed # ...
+    t3 = @elapsed for (i, c) in enumerate(['a':'z'; 'A':'Z'; '0':'9'])
+        counter[i] = count(c, str)
+    end
     @test t3 < t2
 end
